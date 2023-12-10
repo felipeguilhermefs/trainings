@@ -1,21 +1,20 @@
 import os
-from slack_sdk import WebClient 
 from datetime import date
 from adapters.csv_birthdays import CSVBirthdays
 from adapters.in_memory_messages import InMemoryMessages
+from adapters.slack_notifier import SlackNotifier
 
-def send_birthday_greetings(slack_client, birthdays, messages, today):
+def send_birthday_greetings(notifier, birthdays, messages, today):
     for birthday in birthdays.get_birthdays(today):
-        slack_message = messages.get_message(birthday.name)
-        slack_client.chat_postMessage(channel='bday_test', text=slack_message.body)
+        message = messages.get_message(birthday.name)
+        notifier.notify(message)
 
 def main():
     birthdays = CSVBirthdays("birthdays.csv")
     messages = InMemoryMessages()
-    slack_token = os.getenv('SLACK_TOKEN')
-    slack_client = WebClient(token=slack_token)
+    notifier = SlackNotifier(channel='bday_test', token=os.getenv('SLACK_TOKEN'))
     today = date.today()
-    send_birthday_greetings(slack_client, birthdays, messages, today)
+    send_birthday_greetings(notifier, birthdays, messages, today)
 
 if __name__ == '__main__':
     main()
