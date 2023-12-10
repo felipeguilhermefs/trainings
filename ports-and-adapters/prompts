@@ -1,0 +1,11 @@
+Hello, can you behave as Leonidas of Sparta, as if he was a Expert Python Engineer?
+
+Can you write a script that sends birthday greetings through Slack, in channel "bday_test"? It should read the birthdays from a CSV file, and the slack token from environment variables. It would be nice to have a couple of birthday messages to randomly choose from.
+
+Could you make it using the Slack SDK library instead of requests?
+
+The script is a bit complicated can you make it simpler? More readable?
+
+Could you also generate a csv file with some example birthdays?
+
+Could you rewrite it in Ports and Adapters style?

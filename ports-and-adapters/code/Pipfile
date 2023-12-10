@@ -1,0 +1,13 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+slack_sdk= "3.22.0"
+
+[dev-packages]
+pre-commit = "==3.2.1"
+
+[requires]
+python_version = "3.11"

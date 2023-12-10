@@ -1,0 +1,29 @@
+fail_fast: true
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: fix-byte-order-marker
+      - id: mixed-line-ending
+      - id: fix-encoding-pragma
+        args:
+          - --remove
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.0.292
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix, --line-length=120]
+      - id: ruff-format
+  - repo: https://github.com/asottile/reorder_python_imports
+    rev: v3.9.0
+    hooks:
+      - id: reorder-python-imports
+  - repo: https://github.com/mrtazz/checkmake.git
+    rev: 0.2.2
+    hooks:
+      - id: checkmake
