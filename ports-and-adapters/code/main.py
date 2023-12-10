@@ -2,21 +2,13 @@ import os
 import random
 from slack_sdk import WebClient 
 from datetime import date
-
-def load_birthdays():
-    with open('birthdays.csv', 'r') as f:
-        birthdays = []
-        for row in f:
-            name, month, day = row.strip().split(',')
-            birthdays.append({'name': name, 'month': int(month), 'day': int(day)})
-    return birthdays
+from adapters.csv_birthdays import CSVBirthdays
 
 def send_birthday_greetings(slack_client, birthdays, today):
-    for birthday in birthdays:
-        if birthday['month'] == today.month and birthday['day'] == today.day:
-            greeting = choose_random_greeting()
-            slack_message = replace_placeholders(greeting, birthday['name'])
-            slack_client.chat_postMessage(channel='bday_test', text=slack_message)
+    for birthday in birthdays.get_birthdays(today):
+        greeting = choose_random_greeting()
+        slack_message = replace_placeholders(greeting, birthday.name)
+        slack_client.chat_postMessage(channel='bday_test', text=slack_message)
 
 def choose_random_greeting():
     greetings = [
@@ -30,7 +22,7 @@ def replace_placeholders(message, name):
     return message.replace('[name]', name)
 
 def main():
-    birthdays = load_birthdays()
+    birthdays = CSVBirthdays("birthdays.csv")
     slack_token = os.getenv('SLACK_TOKEN')
     slack_client = WebClient(token=slack_token)
     today = date.today()
