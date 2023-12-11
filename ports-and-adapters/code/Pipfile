@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 slack_sdk= "3.22.0"
+fastapi = "*"
+uvicorn = {extras = ["standard"], version = "*"}
 
 [dev-packages]
 pre-commit = "==3.2.1"
